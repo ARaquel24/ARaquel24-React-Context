@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
+import getState from "../store/flux.js";
 
 import rigoImage from "../../img/rigo-baby.jpg";
-import { Link } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import "../../styles/home.css";
 
-export const Home = () => {
-
+export const EditCont = () => {
+	const { store, actions } = useContext(Context);
 	
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState('');
   	const [phone, setPhone] = useState('');
   	const [address, setAddress] = useState('');
+
+	console.log( store.editId)
 
 	const postForm = ()=>{
 		const myHeaders = new Headers();
@@ -24,15 +28,17 @@ export const Home = () => {
 		});
 
 		const requestOptions = {
-		method: "POST",
+		method: "PUT",
 		headers: myHeaders,
 		body: raw,
 		redirect: "follow"
 		};
 
-		fetch("https://playground.4geeks.com/contact/agendas/Agenda/contacts", requestOptions)
+		fetch("https://playground.4geeks.com/contact/agendas/Agenda/contacts/"+store.editId, requestOptions)
 		.then((response) => response.text())
+		
 		};
+		
 
 	return(
 	<>
